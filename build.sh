@@ -89,6 +89,6 @@ buildah config --entrypoint "grafana-server --config=${GF_CONFIG}" $container
 buildah config --label maintainer="Paul Cuzner <pcuzner@redhat.com>" $container
 buildah config --label description="Ceph Grafana Container" $container
 buildah config --label summary="Grafana Container configured for Ceph mgr/dashboard integration" $container
-buildah commit --format docker $container ceph-grafana-el${VERSION}:latest
+buildah commit --format docker --squash $container ceph-grafana-el${VERSION}:latest
 #buildah unmount $mountpoint
 
