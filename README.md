@@ -15,8 +15,13 @@ The versions of grafana, and the plugins are defined in the script so testing ca
 The current implementation uses buildah with a CentOS (7 or 8) base image. The resulting image looks larger than it needs to be, so more work there! 
 
 ## Build Instructions
-Ensure you have buildah installed, then 
+Ensure you have **buildah** installed, then 
 ```
 # ./build.sh
 ```  
 
+## Usage
+A container is available on [docker hub](https://hub.docker.com/r/pcuzner/ceph-grafana-el8)  
+```
+docker pull pcuzner/ceph-grafana-el8:latest
+```
