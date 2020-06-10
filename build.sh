@@ -2,8 +2,8 @@
 set -o errexit
 
 
-GRAFANA_VERSION='6.5.1-1'
-PIECHART_VERSION='1.3.9'
+GRAFANA_VERSION='6.6.2-1'
+PIECHART_VERSION='1.4.0'
 STATUS_PANEL_VERSION='1.0.9'
 DASHBOARD_DIR="monitoring/grafana/dashboards"
 DASHBOARD_PROVISIONING="ceph-dashboard.yml"
@@ -89,6 +89,6 @@ buildah config --entrypoint "grafana-server --config=${GF_CONFIG}" $container
 buildah config --label maintainer="Paul Cuzner <pcuzner@redhat.com>" $container
 buildah config --label description="Ceph Grafana Container" $container
 buildah config --label summary="Grafana Container configured for Ceph mgr/dashboard integration" $container
-buildah commit --format docker --squash $container ceph-grafana-el${VERSION}:latest
+buildah commit --format docker --squash $container ceph-grafana:latest
 #buildah unmount $mountpoint
 
