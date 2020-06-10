@@ -12,11 +12,6 @@ GF_CONFIG := "/etc/grafana/grafana.ini"
 ceph_version := "master"
 
 # Build a grafana instance - preconfigured for use within Ceph's dashboard UI
-clean :
-	rm -f dashboards
-	rm -fr jsonfiles
-	rm -f grafana-*.rpm*
-	rm -f ${DASHBOARD_PROVISIONING}
 
 build : fetch_dashboards
 	echo "Creating base container"
@@ -82,3 +77,20 @@ fetch_dashboards: clean
 	while read -r line; do \
 		wget "$$line" -P jsonfiles; \
 	done < dashboards
+
+clean :
+	rm -f dashboards
+	rm -fr jsonfiles
+	rm -f grafana-*.rpm*
+	rm -f ${DASHBOARD_PROVISIONING}
+
+
+nautilus : 
+	$(MAKE) ceph_version="nautilus" build
+octopus : 
+	$(MAKE) ceph_version="octopus" build
+master : 
+	$(MAKE) ceph_version="master" build
+
+all : nautilus octopus master
+.PHONY : all 
