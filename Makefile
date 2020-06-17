@@ -17,8 +17,8 @@ build : fetch_dashboards
 	echo "Creating base container"
 	$(eval CONTAINER := $(shell buildah from ${IMAGE}))
 	# Using upstream grafana build
-	#wget https://dl.grafana.com/oss/release/grafana-${GRAFANA_VERSION}.x86_64.rpm
-	wget localhost:8000/grafana-${GRAFANA_VERSION}.x86_64.rpm
+	wget https://dl.grafana.com/oss/release/grafana-${GRAFANA_VERSION}.x86_64.rpm
+	#wget localhost:8000/grafana-${GRAFANA_VERSION}.x86_64.rpm
 	#cp grafana-${GRAFANA_VERSION}.x86_64.rpm ${mountpoint}/tmp/.
 	buildah copy $(CONTAINER) grafana-${GRAFANA_VERSION}.x86_64.rpm /tmp/grafana-${GRAFANA_VERSION}.x86_64.rpm 
 	buildah run $(CONTAINER) ${PKGMGR} install -y --setopt install_weak_deps=false --setopt=tsflags=nodocs /tmp/grafana-${GRAFANA_VERSION}.x86_64.rpm
@@ -65,6 +65,7 @@ providers: \\n\
 	buildah config --label description="Ceph Grafana Container" $(CONTAINER)
 	buildah config --label summary="Grafana Container configured for Ceph mgr/dashboard integration" $(CONTAINER)
 	buildah commit --format docker --squash $(CONTAINER) ceph-grafana:${ceph_version}
+	buildah tag ceph-grafana:${ceph_version} ceph/ceph-grafana:${ceph_version}
 
 
 fetch_dashboards: clean
